@@ -19,11 +19,7 @@ public class DataBag {
 
     private Map<String,String> headers = new HashMap<>();
     private Map<String,Class> models = new HashMap<>();
-
-    private String productId;
-
+    private Map<String,Object> data = new HashMap<>();
     private EntityExchangeResult<String> result;
-
-    private Map<String,String> data = new HashMap<>();
 
 }

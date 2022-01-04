@@ -11,7 +11,7 @@ import reactor.core.publisher.Flux;
 public interface ProductRepository extends ReactiveCrudRepository<Product, String> {
 
     @Query("#{#n1ql.selectEntity} WHERE #{#n1ql.filter} AND type = $1 ORDER BY name")
-    public Flux<Product> findProductByType(ProductType productType);
+    Flux<Product> findProductByType(ProductType productType);
 
 
 }
