@@ -1,0 +1,17 @@
+dist: trusty
+language: java
+
+jdk:
+  - oraclejdk11
+
+before_script:
+  - docker-compose up -d
+  - docker ps
+
+script:
+  - mvn clean install
+  -
+cache:
+  directories:
+    - .autoconf
+    - $HOME/.m2
