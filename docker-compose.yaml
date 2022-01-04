@@ -1,0 +1,20 @@
+version: '3'
+services:
+  couchbase:
+    image: bentonam/couchbase-docker:enterprise
+    container_name: orders-couchbase
+    ports:
+      - "8091-8094:8091-8094"
+      - "11210:11210"
+    environment:
+      CLUSTER_USERNAME: Administrator
+      CLUSTER_PASSWORD: admin12345
+      CLUSTER_NAME: My Couchbase Node
+      SERVICES: data,index,query,fts
+      CLUSTER_RAMSIZE: 500
+      BUCKET: orders
+      BUCKET_RAMSIZE: 100
+      NODE_INIT_INDEX_PATH: /opt/couchbase/var/lib/couchbase/indexes
+      RBAC_USERNAME: userorders
+      RBAC_PASSWORD: passwordorders
+      RBAC_ROLES: bucket_full_access[orders]

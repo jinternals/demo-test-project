@@ -1,0 +1,18 @@
+management:
+  endpoint:
+    health:
+      show-details: always
+spring:
+  couchbase:
+    env:
+      ssl:
+        enabled: false
+    connection-string: "couchbase://localhost"
+    username: userorders
+    password: passwordorders
+  data:
+    couchbase:
+      auto-index: true
+      bucket-name: orders
+
+debug: false
