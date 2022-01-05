@@ -23,7 +23,7 @@ class CreateProductRequestTest {
     }
 
     @Test
-    public void shouldValidateType() {
+    public void shouldValidateTypeIsValid() {
         CreateProductRequest request = CreateProductRequest.builder().name("some-name").type("food").build();
 
         Set<ConstraintViolation<CreateProductRequest>> constraintViolations = validator.validate( request );
