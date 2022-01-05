@@ -1,6 +1,5 @@
 package com.jinternals.demo.controllers;
 
-import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;

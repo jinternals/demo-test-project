@@ -15,6 +15,8 @@ public class CreateProductRequest {
     @NotEmpty(message = "Empty or null name not allowed")
     private String name;
 
+    private String description;
+
     @EnumValidator(
             enumClass = ProductType.class,
             caseSensitive = true,

@@ -3,7 +3,6 @@ package com.jinternals.demo.controllers;
 import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
-import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
 import org.springframework.http.HttpStatus;
@@ -42,6 +41,7 @@ public class ProductController {
     private Product fromRequest(CreateProductRequest productRequest){
         return   Product.builder()
                 .name(productRequest.getName())
+                .description(productRequest.getDescription())
                 .type(ProductType.valueOf(productRequest.getType()))
                 .build();
 

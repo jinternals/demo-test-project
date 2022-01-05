@@ -4,7 +4,6 @@ package com.jinternals.demo.services;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +13,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import javax.validation.ConstraintViolationException;
+
 import static com.jinternals.demo.domain.Product.builder;
 import static com.jinternals.demo.domain.ProductType.FOOD;
+import static com.jinternals.demo.utils.ValidationTestUtil.validationProxy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -27,16 +29,15 @@ class ProductServiceTest {
 
     @Mock
     private ProductRepository productRepository;
-
     private ProductService productService;
 
     @BeforeEach
-    void setUp() {
-        productService = new ProductService(productRepository);
+    public void initializeTest() {
+        productService = validationProxy(new ProductService(productRepository));
     }
 
     @Test
-    public void shouldSaveTheProduct(){
+    public void shouldSaveTheProduct() {
         Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
         when(productRepository.save(product)).thenReturn(just(product));
 
@@ -47,22 +48,22 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldFindProductByType(){
+    public void shouldFindProductByType() {
         when(productRepository.findProductByType(FOOD)).thenReturn(Flux.just(
-            builder().id("some-id-1").name("Apple").type(FOOD).build(),
-             builder().id("some-id-2").name("Banana").type(FOOD).build()
+                builder().id("some-id-1").name("Apple").type(FOOD).build(),
+                builder().id("some-id-2").name("Banana").type(FOOD).build()
         ));
 
         StepVerifier.create(productService.findProductByType(FOOD))
                 .expectNextMatches(product -> product.equals(builder().id("some-id-1").name("Apple").type(FOOD).build()))
-                .expectNextMatches(product -> product.equals( builder().id("some-id-2").name("Banana").type(FOOD).build()))
+                .expectNextMatches(product -> product.equals(builder().id("some-id-2").name("Banana").type(FOOD).build()))
                 .verifyComplete();
 
         verify(productRepository).findProductByType(FOOD);
     }
 
     @Test
-    public void shouldGetProductById(){
+    public void shouldGetProductById() {
         Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
         when(productRepository.findById("some-id-1")).thenReturn(just(product));
 
@@ -74,16 +75,48 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldThrowProductNotFoundException(){
-       when(productRepository.findById("some-id-1")).thenReturn(Mono.empty());
+    public void shouldThrowProductNotFoundException() {
+        when(productRepository.findById("some-id-1")).thenReturn(Mono.empty());
 
-       assertThatThrownBy(() ->  productService.getProductById("some-id-1").block(), "")
-               .isInstanceOf(ProductNotFoundException.class)
-               .hasMessageContaining("Product with id some-id-1 not found.");
+        assertThatThrownBy(() -> productService.getProductById("some-id-1").block(), "")
+                .isInstanceOf(ProductNotFoundException.class)
+                .hasMessageContaining("Product with id some-id-1 not found.");
 
-       verify(productRepository).findById("some-id-1");
+        verify(productRepository).findById("some-id-1");
     }
 
+    @Test
+    public void shouldThrowConstraintViolationExceptionForCreateProduct() {
+        Product product = builder().build();
 
+        assertThatThrownBy(() -> productService.createProduct(product))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContainingAll("Empty or null id is not allowed",
+                        "Empty or null name is not allowed",
+                        "null Empty is not allowed"
+                );
 
+    }
+
+    @Test
+    public void shouldThrowConstraintViolationExceptionForFindProductByType() {
+
+        assertThatThrownBy(() -> productService.findProductByType(null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("productType should not be null");
+
+    }
+
+    @Test
+    public void shouldThrowConstraintViolationExceptionForGetProductById() {
+
+        assertThatThrownBy(() -> productService.getProductById(""))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("productId should not be null or empty");
+
+        assertThatThrownBy(() -> productService.getProductById(null))
+                .isInstanceOf(ConstraintViolationException.class)
+                .hasMessageContaining("productId should not be null or empty");
+
+    }
 }

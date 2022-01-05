@@ -24,6 +24,7 @@
 		<cucumber-reporting.version>5.6.1</cucumber-reporting.version>
 		<junit-jupiter.version>5.8.2</junit-jupiter.version>
 		<junit-platform-suite.version>1.8.2</junit-platform-suite.version>
+		<reflections.version>0.10.2</reflections.version>
 	</properties>
 
 	<dependencyManagement>
@@ -60,7 +61,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>${reflections.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.junit.platform</groupId>
