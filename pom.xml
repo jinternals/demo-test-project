@@ -25,6 +25,7 @@
 		<junit-jupiter.version>5.8.2</junit-jupiter.version>
 		<junit-platform-suite.version>1.8.2</junit-platform-suite.version>
 		<reflections.version>0.10.2</reflections.version>
+		<reactor-kafka.version>1.3.9</reactor-kafka.version>
 	</properties>
 
 	<dependencyManagement>
@@ -66,6 +67,15 @@
 			<artifactId>reflections</artifactId>
 			<version>${reflections.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor.kafka</groupId>
+			<artifactId>reactor-kafka</artifactId>
+			<version>${reactor-kafka.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.junit.platform</groupId>
@@ -97,6 +107,7 @@
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -107,15 +118,25 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>couchbase</artifactId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
+			<artifactId>kafka</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>couchbase</artifactId>
 			<scope>test</scope>
 		</dependency>
 

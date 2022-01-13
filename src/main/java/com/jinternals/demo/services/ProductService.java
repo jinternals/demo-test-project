@@ -2,6 +2,7 @@ package com.jinternals.demo.services;
 
 import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,12 @@ import static reactor.core.publisher.Mono.error;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    public final EventGateway eventGateway;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository,
+                          EventGateway eventGateway) {
         this.productRepository = productRepository;
+        this.eventGateway = eventGateway;
     }
 
     public Mono<Product> createProduct(@Valid Product product) {

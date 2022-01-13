@@ -10,7 +10,7 @@ import org.testcontainers.couchbase.CouchbaseContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
-public class TestContainersSetup {
+public class CouchbaseTestContainersSetup {
     private static final String COUCHBASE_CONTAINER = "couchbase:enterprise-6.5.1";
     private static final Logger COUCHBASE_LOGGER = LoggerFactory.getLogger("container.Couchbase");
 
@@ -20,6 +20,7 @@ public class TestContainersSetup {
 
 
     public static void initTestContainers(ConfigurableEnvironment configEnv) {
+
         if(couchbaseContainer.isRunning()){
             return;
         }
@@ -35,9 +36,7 @@ public class TestContainersSetup {
 
         couchbaseContainer.start();
 
-
         couchbaseContainer.followOutput(new Slf4jLogConsumer(COUCHBASE_LOGGER));
-
 
     }
 

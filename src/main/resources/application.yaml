@@ -14,5 +14,12 @@ spring:
     couchbase:
       auto-index: true
       bucket-name: orders
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+event:
+  package: com.jinternals.demo.domain.events
 
 debug: false

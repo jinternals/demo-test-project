@@ -13,14 +13,13 @@ public class SpringBootContextInitializer implements ApplicationContextInitializ
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
 
         // Initialize and start test containers
-        TestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
+        CouchbaseTestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
+        KafkaTestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
+        String couchbaseConnectionString = "spring.couchbase.connection-string=" + CouchbaseTestContainersSetup.getConnectionString();
+        String kafkaBootstrapServers = "spring.kafka.bootstrap-servers=" + KafkaTestContainersSetup.getBootstrapServers();
 
-        String properties = "spring.couchbase.connection-string=" + TestContainersSetup.getConnectionString();
+        of(couchbaseConnectionString, kafkaBootstrapServers)
+                .applyTo(configurableApplicationContext);
 
-        log.info("Changed config", properties);
-
-        of(
-                properties
-        ).applyTo(configurableApplicationContext);
     }
 }

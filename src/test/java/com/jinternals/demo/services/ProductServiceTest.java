@@ -2,6 +2,7 @@ package com.jinternals.demo.services;
 
 
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,11 +30,14 @@ class ProductServiceTest {
 
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private EventGateway eventGateway;
+
     private ProductService productService;
 
     @BeforeEach
     public void initializeTest() {
-        productService = validationProxy(new ProductService(productRepository));
+        productService = validationProxy(new ProductService(productRepository, eventGateway));
     }
 
     @Test
