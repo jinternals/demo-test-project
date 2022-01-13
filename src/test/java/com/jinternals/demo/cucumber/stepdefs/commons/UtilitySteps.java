@@ -12,8 +12,8 @@ public class UtilitySteps {
     @Autowired
     private DataBag dataBag;
 
-    @Given("register pojo {string} as {string}")
-    public void register_pojo_as(String className, String key) throws Exception {
+    @Given("register entity {string} as {string}")
+    public void register_as_entity(String className, String key) throws Exception {
         Class<?> cls = Class.forName(className);
         dataBag.getModels().put(key, cls);
     }

@@ -5,8 +5,7 @@ Feature: Check product apis
     And configure http headers to:
       | Accept       | application/json |
       | Content-Type | application/json |
-    And register pojo "com.jinternals.demo.domain.Product" as "Product"
-    And register pojo "com.jinternals.demo.domain.events.ProductCreatedEvent" as "ProductCreatedEvent"
+    And register entity "com.jinternals.demo.domain.Product" as "Product"
 
   Scenario: Save Product Information
     Given the client invokes POST "/api/product" with:
@@ -40,7 +39,3 @@ Feature: Check product apis
     Then "$.id" should be "demo-id"
     Then "$.name" should be "demo-product"
     Then "$.type" should be "FOOD"
-    Then verify "ProductCreatedEvent" is published on "product" topic with content:
-    """
-    {"id": "demo-id", "name":  "demo-product", "type": "FOOD" }
-    """
