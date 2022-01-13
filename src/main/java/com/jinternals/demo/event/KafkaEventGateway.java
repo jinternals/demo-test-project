@@ -20,6 +20,7 @@ public class KafkaEventGateway implements EventGateway {
         this.destination = destination;
     }
 
+    @Override
     public Mono<SenderResult<Void>> publish(Object event){
 
         String topic = destination.get(event.getClass());

@@ -2,7 +2,6 @@ package com.jinternals.demo.controllers;
 
 import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
-import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
@@ -32,9 +31,6 @@ class ProductControllerTest {
 
     @MockBean
     private IDGenerator idGenerator;
-
-    @MockBean
-    private EventGateway eventGateway;
 
     @Test
     public void shouldCreateProduct() {
