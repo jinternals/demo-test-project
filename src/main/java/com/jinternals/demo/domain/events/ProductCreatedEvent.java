@@ -9,8 +9,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-@Event(destination = "product")
 @EqualsAndHashCode
+@Event(destination = "product")
 public class ProductCreatedEvent {
     private String id;
     private String name;
