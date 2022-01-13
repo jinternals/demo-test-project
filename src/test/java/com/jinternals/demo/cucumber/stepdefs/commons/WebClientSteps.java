@@ -15,7 +15,7 @@ public class WebClientSteps {
     private WebTestClient webTestClient;
 
     @When("the client invokes POST {string} with:")
-    public void the_client_post_to_with(String string, String jsonBody) throws Exception {
+    public void the_client_post_to_with(String string, String jsonBody) {
         EntityExchangeResult<String> result = webTestClient
                 .post()
                 .uri(string)

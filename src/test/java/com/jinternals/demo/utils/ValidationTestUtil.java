@@ -1,6 +1,5 @@
 package com.jinternals.demo.utils;
 
-import com.jinternals.demo.services.ProductService;
 import org.junit.platform.commons.util.AnnotationUtils;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.framework.ProxyFactory;

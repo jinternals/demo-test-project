@@ -3,16 +3,16 @@ package com.jinternals.demo.controllers;
 import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
-import com.jinternals.demo.domain.events.ProductCreatedEvent;
-import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
 @RestController
@@ -29,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/product", consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public Mono<Product> saveProduct(@RequestBody @Valid CreateProductRequest productRequest) {
         Product product = fromRequest(productRequest);
         product.setId(idGenerator.generateId());
@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product/{productId}", produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(OK)
     public Mono<Product> getProduct(@PathVariable("productId") String productId) {
         return productService.getProductById(productId);
     }

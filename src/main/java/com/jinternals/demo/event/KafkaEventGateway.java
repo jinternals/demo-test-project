@@ -6,7 +6,8 @@ import reactor.core.publisher.Mono;
 import reactor.kafka.sender.SenderResult;
 
 import java.util.Map;
-import java.util.Objects;
+
+import static java.util.Objects.isNull;
 
 public class KafkaEventGateway implements EventGateway {
 
@@ -22,7 +23,7 @@ public class KafkaEventGateway implements EventGateway {
     public Mono<SenderResult<Void>> publish(Object event){
 
         String topic = destination.get(event.getClass());
-        if(Objects.isNull(topic)){
+        if(isNull(topic)){
            return Mono.error(new InvalidEventException(String.format("Please ensure your event is annotated with @Event(destination = \"your-destination-topic\")")));
         }
         return reactiveKafkaProducerTemplate.send(topic, event);

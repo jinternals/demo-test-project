@@ -1,11 +1,11 @@
 package com.jinternals.demo.controllers;
 
+import com.jinternals.demo.controllers.requests.CreateProductRequest;
+import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
-import com.jinternals.demo.controllers.requests.CreateProductRequest;
-import com.jinternals.demo.domain.Product;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

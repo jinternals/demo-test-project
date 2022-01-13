@@ -3,12 +3,11 @@ package com.jinternals.demo.cucumber.stepdefs.commons;
 import com.jinternals.demo.cucumber.DataBag;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import org.apache.kafka.clients.consumer.*;
-
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
 
 public class KafkaSteps {

@@ -12,7 +12,7 @@ import reactor.kafka.sender.SenderOptions;
 import java.util.Map;
 
 @Configuration
-public class ReactiveKafkaProducerConfiguration {
+public class KafkaProducerConfiguration {
 
     @Bean
     public ReactiveKafkaProducerTemplate<String, Object> reactiveKafkaProducerTemplate

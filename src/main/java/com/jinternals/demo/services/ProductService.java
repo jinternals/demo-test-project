@@ -1,7 +1,7 @@
 package com.jinternals.demo.services;
 
-import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.events.ProductCreatedEvent;
 import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
@@ -25,7 +25,7 @@ import static reactor.core.publisher.Mono.error;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    public final EventGateway eventGateway;
+    private final EventGateway eventGateway;
 
     public ProductService(ProductRepository productRepository,
                           EventGateway eventGateway) {
@@ -37,7 +37,7 @@ public class ProductService {
         return productRepository.save(product)
                 .doOnSuccess(product1 -> {
                 eventGateway.publish(toEvent(product1))
-                        .doOnSuccess(voidSenderResult -> log.info("Published event successfully."))
+                        .doOnSuccess(senderResult -> log.info("Published event successfully."))
                         .subscribe();
             });
     }
