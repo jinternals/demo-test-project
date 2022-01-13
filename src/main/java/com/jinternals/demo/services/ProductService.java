@@ -2,9 +2,11 @@ package com.jinternals.demo.services;
 
 import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.domain.events.ProductCreatedEvent;
 import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
@@ -17,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import static java.lang.String.format;
 import static reactor.core.publisher.Mono.error;
 
+@Slf4j
 @Service
 @Validated
 public class ProductService {
@@ -30,10 +33,13 @@ public class ProductService {
         this.eventGateway = eventGateway;
     }
 
-    public Mono<Product> createProduct(@Valid Product product) {
-
-        return productRepository.save(product);
-
+    public Mono<Product> saveProduct(@Valid Product product) {
+        return productRepository.save(product)
+                .doOnSuccess(product1 -> {
+                eventGateway.publish(toEvent(product1))
+                        .doOnSuccess(voidSenderResult -> log.info("Published event successfully."))
+                        .subscribe();
+            });
     }
 
     public Flux<Product> findProductByType(
@@ -54,4 +60,15 @@ public class ProductService {
                 );
 
     }
+
+    private ProductCreatedEvent toEvent(Product product){
+        return   ProductCreatedEvent.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .type(product.getType())
+                .build();
+
+    }
+
 }

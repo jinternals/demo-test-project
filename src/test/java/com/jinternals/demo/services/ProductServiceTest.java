@@ -2,6 +2,7 @@ package com.jinternals.demo.services;
 
 
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.domain.events.ProductCreatedEvent;
 import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
@@ -9,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.kafka.sender.SenderResult;
 import reactor.test.StepVerifier;
 
 import javax.validation.ConstraintViolationException;
@@ -21,8 +24,7 @@ import static com.jinternals.demo.domain.ProductType.FOOD;
 import static com.jinternals.demo.utils.ValidationTestUtil.validationProxy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static reactor.core.publisher.Mono.just;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,11 +45,14 @@ class ProductServiceTest {
     @Test
     public void shouldSaveTheProduct() {
         Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
+        ProductCreatedEvent productCreatedEvent = ProductCreatedEvent.builder().id("some-id-1").name("Apple").type(FOOD).build();
         when(productRepository.save(product)).thenReturn(just(product));
+        when(eventGateway.publish(productCreatedEvent)).thenReturn(just(mock(SenderResult.class)));
 
-        Product savedProduct = productService.createProduct(product).block();
+        Product savedProduct = productService.saveProduct(product).block();
 
         verify(productRepository).save(product);
+        verify(eventGateway).publish(productCreatedEvent);
         assertThat(savedProduct).isEqualTo(product);
     }
 
@@ -93,7 +98,7 @@ class ProductServiceTest {
     public void shouldThrowConstraintViolationExceptionForCreateProduct() {
         Product product = builder().build();
 
-        assertThatThrownBy(() -> productService.createProduct(product))
+        assertThatThrownBy(() -> productService.saveProduct(product))
                 .isInstanceOf(ConstraintViolationException.class)
                 .hasMessageContainingAll("Empty or null id is not allowed",
                         "Empty or null name is not allowed",

@@ -21,7 +21,7 @@ public class PersistenceSteps {
 
     @Given("{string} with following details exist in db:")
     public void with_following_details_exist_in_db(String model, String document) throws Exception {
-        Class aClass = dataBag.getModels().get(model);
+        Class aClass = dataBag.getEntities().get(model);
         assertThat(aClass).isNotNull();
 
         Repositories repositories = new Repositories(applicationContext);

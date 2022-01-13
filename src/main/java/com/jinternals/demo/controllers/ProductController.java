@@ -3,14 +3,18 @@ package com.jinternals.demo.controllers;
 import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
+import com.jinternals.demo.domain.events.ProductCreatedEvent;
+import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -29,7 +33,7 @@ public class ProductController {
     public Mono<Product> saveProduct(@RequestBody @Valid CreateProductRequest productRequest) {
         Product product = fromRequest(productRequest);
         product.setId(idGenerator.generateId());
-        return productService.createProduct(product);
+        return productService.saveProduct(product);
     }
 
     @GetMapping(value = "/product/{productId}", produces = "application/json")

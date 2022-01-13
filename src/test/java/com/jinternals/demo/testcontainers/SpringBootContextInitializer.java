@@ -16,7 +16,7 @@ public class SpringBootContextInitializer implements ApplicationContextInitializ
         CouchbaseTestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
         KafkaTestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
         String couchbaseConnectionString = "spring.couchbase.connection-string=" + CouchbaseTestContainersSetup.getConnectionString();
-        String kafkaBootstrapServers = "spring.kafka.bootstrap-servers=" + KafkaTestContainersSetup.getBootstrapServers();
+        String kafkaBootstrapServers = "spring.kafka.producer.bootstrap-servers=" + KafkaTestContainersSetup.getBootstrapServers();
 
         of(couchbaseConnectionString, kafkaBootstrapServers)
                 .applyTo(configurableApplicationContext);

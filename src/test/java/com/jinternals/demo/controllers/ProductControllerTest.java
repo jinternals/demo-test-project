@@ -1,5 +1,6 @@
 package com.jinternals.demo.controllers;
 
+import com.jinternals.demo.event.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.services.ProductService;
 import com.jinternals.demo.utils.IDGenerator;
@@ -32,6 +33,9 @@ class ProductControllerTest {
     @MockBean
     private IDGenerator idGenerator;
 
+    @MockBean
+    private EventGateway eventGateway;
+
     @Test
     public void shouldCreateProduct() {
 
@@ -41,7 +45,7 @@ class ProductControllerTest {
 
         Mono<Product> productMono = Mono.just(product);
 
-        when(productService.createProduct(product)).thenReturn(productMono);
+        when(productService.saveProduct(product)).thenReturn(productMono);
         when(idGenerator.generateId()).thenReturn("some-id");
 
         webTestClient.post()
