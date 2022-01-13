@@ -5,7 +5,7 @@ Feature: Check product apis
     And configure http headers to:
       | Accept       | application/json |
       | Content-Type | application/json |
-    And register pojo "com.jinternals.demo.domain.Product" as "Product"
+    And register entity "com.jinternals.demo.domain.Product" as "Product"
 
   Scenario: Save Product Information
     Given the client invokes POST "/api/product" with:
