@@ -17,7 +17,7 @@
 	<description>spring demo test project</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<cucumber.version>7.1.0</cucumber.version>
 		<testcontainers-bom.version>1.16.2</testcontainers-bom.version>
 		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
