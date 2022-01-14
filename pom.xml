@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.jinternals</groupId>
-	<artifactId>demo-project</artifactId>
+	<artifactId>demo-test-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo-project</name>
-	<description>spring demo project</description>
+	<name>demo-test-project</name>
+	<description>spring demo test project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
