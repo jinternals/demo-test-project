@@ -18,7 +18,7 @@ Feature: Check product apis
     And "$.id" should not be "null"
     And "$.name" should be "some-product-1"
     And "$.type" should be "FOOD"
-    And verify "ProductCreatedEvent" is published on "product" topic with content:
+    And "ProductCreatedEvent" is published on "product" topic with payload:
     """
     {
       "id": "${json-unit.regex}[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
@@ -31,14 +31,20 @@ Feature: Check product apis
   Scenario: Get Product Information by id
     Given the client invokes POST "/api/product" with:
     """
-    { "name":  "some-product-x", "type": "FOOD" }
+    { "name":  "some-product-x", "type": "FOOD", "description": "some-description-x" }
     """
     And save in scope "$.id" as "productId"
     When the client invokes GET "/api/product/{productId}"
     Then api respond with status 200
-    And "$.id" should not be "null"
-    And "$.name" should be "some-product-x"
-    And "$.type" should be "FOOD"
+    And response is received with payload:
+    """
+    {
+      "id": "${json-unit.regex}[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+      "name": "some-product-x",
+      "type": "FOOD",
+      "description": "some-description-x"
+    }
+    """
 
   Scenario: Get Product Information by id
     Given "Product" with following details exist in db:

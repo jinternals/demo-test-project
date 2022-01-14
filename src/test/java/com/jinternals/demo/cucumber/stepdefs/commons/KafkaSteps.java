@@ -1,6 +1,7 @@
 package com.jinternals.demo.cucumber.stepdefs.commons;
 
 import com.jinternals.demo.cucumber.DataBag;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -17,19 +18,19 @@ public class KafkaSteps {
     @Autowired
     private DataBag dataBag;
 
-    @Given("configure kafka-timeout to {int}")
+    @And("configure kafka-timeout to {int}")
     public void configure_kafka_timeout_to(Integer timeout) {
         dataBag.getTimeouts().put(KAFKA_TIMEOUT_KEY, timeout);
     }
 
-    @Given("register event {string} as {string}")
+    @And("register event {string} as {string}")
     public void register_as_event(String className, String key) throws Exception {
         Class<?> cls = Class.forName(className);
         dataBag.getEvents().put(key, cls);
     }
 
-    @Then("verify {string} is published on {string} topic with content:")
-    public void verify_is_published_with_content(String eventType, String topic, String document) {
+    @And("{string} is published on {string} topic with payload:")
+    public void event_is_published_with_content(String eventType, String topic, String document) {
        // Class aClass = dataBag.getEntities().get(eventType);
 
         ConsumerRecord<String, String> singleRecord =

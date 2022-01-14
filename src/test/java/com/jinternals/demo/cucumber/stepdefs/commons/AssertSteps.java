@@ -4,10 +4,13 @@ import com.jayway.jsonpath.JsonPath;
 import com.jinternals.demo.cucumber.DataBag;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.valueOf;
+import static org.springframework.kafka.test.utils.KafkaTestUtils.getSingleRecord;
 
 public class AssertSteps {
 
@@ -36,10 +39,14 @@ public class AssertSteps {
         }
     }
 
-
     @Then("api respond with status {int}")
     public void api_respond_with_status(int status) {
         assertThat(dataBag.getResult().getStatus()).isEqualTo(valueOf(status));
+    }
+
+    @And("response is received with payload:")
+    public void response_is_received_with_payload(String jsonDocument) {
+        assertThatJson(dataBag.getResult().getResponseBody()).isEqualTo(jsonDocument);
     }
 
 }
