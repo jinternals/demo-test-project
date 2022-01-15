@@ -11,18 +11,19 @@ import static java.util.stream.Collectors.toMap;
 
 public class ReflectionsUtils {
 
+    private ReflectionsUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Map<Class<?>, String> getEventDestination(String eventPackage) {
 
-            Reflections reflections = new Reflections(eventPackage);
+        Reflections reflections = new Reflections(eventPackage);
 
-            Set<Class<?>> eventClasses = reflections.getTypesAnnotatedWith(Event.class);
+        Set<Class<?>> eventClasses = reflections.getTypesAnnotatedWith(Event.class);
 
-            Map<Class<?>, String> typeMapping = eventClasses
-                    .stream()
-                    .collect(toMap(identity(), cls -> cls.getAnnotation(Event.class).destination()));
-
-            return typeMapping;
-
+        return eventClasses
+                .stream()
+                .collect(toMap(identity(), cls -> cls.getAnnotation(Event.class).destination()));
 
     }
 }

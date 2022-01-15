@@ -16,13 +16,13 @@ class CreateProductRequestTest {
     private static Validator validator;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
     @Test
-    public void shouldValidateTypeIsValid() {
+    void shouldValidateTypeIsValid() {
         CreateProductRequest request = CreateProductRequest.builder().name("some-name").type("food").build();
 
         Set<ConstraintViolation<CreateProductRequest>> constraintViolations = validator.validate( request );
@@ -33,7 +33,7 @@ class CreateProductRequestTest {
 
 
     @Test
-    public void shouldValidateNameIsNotNull() {
+     void shouldValidateNameIsNotNull() {
         CreateProductRequest request = CreateProductRequest.builder().type("FOOD").build();
 
         Set<ConstraintViolation<CreateProductRequest>> constraintViolations = validator.validate( request );
@@ -45,7 +45,7 @@ class CreateProductRequestTest {
 
 
     @Test
-    public void shouldNotFailValidationIfAllTheValuesAreCorrect() {
+    void shouldNotFailValidationIfAllTheValuesAreCorrect() {
         CreateProductRequest request = CreateProductRequest.builder().name("some-name").type("FOOD").build();
 
         Set<ConstraintViolation<CreateProductRequest>> constraintViolations = validator.validate( request );

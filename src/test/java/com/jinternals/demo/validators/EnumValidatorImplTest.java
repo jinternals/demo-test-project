@@ -16,13 +16,13 @@ class EnumValidatorImplTest {
     private static Validator validator;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
     @Test
-    public void shouldNotFailIfValueIsCaseSensitive() {
+    void shouldNotFailIfValueIsCaseSensitive() {
         DemoClass1 demoClass = new DemoClass1("DEMO_ENUM_1");
 
         Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate( demoClass );
@@ -31,7 +31,7 @@ class EnumValidatorImplTest {
     }
 
     @Test
-    public void shouldFailIfValueIsNotCaseSensitive() {
+    void shouldFailIfValueIsNotCaseSensitive() {
         DemoClass1 demoClass = new DemoClass1("demo_enum_1");
 
         Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate( demoClass );
@@ -41,7 +41,7 @@ class EnumValidatorImplTest {
     }
 
     @Test
-    public void shouldNotFailIfValueIsNotCaseSensitive() {
+    void shouldNotFailIfValueIsNotCaseSensitive() {
         DemoClass2 demoClass = new DemoClass2("demo_enum_2");
 
         Set<ConstraintViolation<DemoClass2>> constraintViolations = validator.validate( demoClass );
@@ -55,7 +55,7 @@ class EnumValidatorImplTest {
     }
     static class DemoClass1{
 
-        public DemoClass1(String value) {
+        DemoClass1(String value) {
             this.value = value;
         }
 
@@ -70,7 +70,7 @@ class EnumValidatorImplTest {
 
     static class DemoClass2{
 
-        public DemoClass2(String value) {
+        DemoClass2(String value) {
             this.value = value;
         }
 

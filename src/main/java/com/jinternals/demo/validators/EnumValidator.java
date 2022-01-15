@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @ReportAsSingleViolation
 public @interface EnumValidator {
 
-    Class<? extends Enum<?>> enumClass();
+    Class<? extends Enum> enumClass();
 
     boolean caseSensitive() default true;
 

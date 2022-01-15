@@ -21,11 +21,13 @@ public class KafkaEventGateway implements EventGateway {
     }
 
     @Override
-    public Mono<SenderResult<Void>> publish(Object event){
+    public Mono<SenderResult<Void>> publish(Object event) {
 
         String topic = destination.get(event.getClass());
-        if(isNull(topic)){
-           return Mono.error(new InvalidEventException(String.format("Please ensure your event is annotated with @Event(destination = \"your-destination-topic\")")));
+        if (isNull(topic)) {
+            return Mono.error(
+                    new InvalidEventException("Please ensure your event is annotated with @Event(destination = \"your-destination-topic\")")
+            );
         }
         return reactiveKafkaProducerTemplate.send(topic, event);
     }

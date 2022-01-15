@@ -23,7 +23,7 @@ public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, Str
         this.enumValidator = enumValidator;
         valueList = new ArrayList<>();
 
-        Class<? extends Enum<?>> enumClass = enumValidator.enumClass();
+        Class<? extends Enum> enumClass = enumValidator.enumClass();
 
         for (@SuppressWarnings("rawtypes") Enum value : enumClass.getEnumConstants()) {
             valueList.add(value.toString());

@@ -15,15 +15,16 @@ class IDGeneratorTest {
     private IDGenerator idGenerator = new IDGenerator();
 
     @Test
-    public void shouldGenerateValidUUID(){
+    void shouldGenerateValidUUID(){
         String generatedId = idGenerator.generateId();
 
-        assertThat(generatedId).hasSize(36);
-        assertThat(generatedId).matches(UUID_REGEX);
+        assertThat(generatedId)
+                .hasSize(36)
+                .matches(UUID_REGEX);
     }
 
     @Test
-    public void shouldNotGenerateEmptyId(){
+    void shouldNotGenerateEmptyId(){
         String generatedId = idGenerator.generateId();
 
         assertThat(generatedId).isNotEmpty();
@@ -31,14 +32,14 @@ class IDGeneratorTest {
 
 
     @Test
-    public void shouldNotGenerateBlankId(){
+    void shouldNotGenerateBlankId(){
         String generatedId = idGenerator.generateId();
 
         assertThat(generatedId).isNotBlank();
     }
 
     @Test
-    public void shouldAlwaysGenerateUniqueIds(){
+    void shouldAlwaysGenerateUniqueIds(){
         Random random = new Random();
         int randomNumber = random.nextInt(1000);
 
