@@ -19,7 +19,18 @@ spring:
       bootstrap-servers: localhost:9092
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-
+  security:
+    oauth2:
+      client:
+        registration:
+          custom:
+            client-id: demo-client
+            client-secret: 9584640c-3804-4dcd-997b-93593cfb9ea7
+            authorization-grant-type: client_credentials
+            scope: recommendation
+        provider:
+          custom:
+            token-uri: ${services.auth-service.url}/uaa/oauth/token
 event:
   package: com.jinternals.demo.domain.events
 

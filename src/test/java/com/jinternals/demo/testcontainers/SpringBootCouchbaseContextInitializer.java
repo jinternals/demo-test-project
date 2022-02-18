@@ -13,9 +13,9 @@ public class SpringBootCouchbaseContextInitializer implements ApplicationContext
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
 
         // Initialize and start test containers
-        CouchbaseTestContainersSetup.initTestContainers(configurableApplicationContext.getEnvironment());
+        CouchbaseTestContainerSetup.initTestContainers(configurableApplicationContext.getEnvironment());
 
-        String properties = "spring.couchbase.connection-string=" + CouchbaseTestContainersSetup.getConnectionString();
+        String properties = "spring.couchbase.connection-string=" + CouchbaseTestContainerSetup.getConnectionString();
 
         log.info("Changed config", properties);
 

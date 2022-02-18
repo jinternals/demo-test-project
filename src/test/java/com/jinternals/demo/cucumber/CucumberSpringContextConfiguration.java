@@ -4,6 +4,7 @@ import com.jinternals.demo.Application;
 import com.jinternals.demo.events.annotation.Event;
 import com.jinternals.demo.testcontainers.SpringBootCouchbaseContextInitializer;
 import com.jinternals.demo.testcontainers.SpringBootKafkaContextInitializer;
+import com.jinternals.demo.testcontainers.SpringBootWiremockContextInitializer;
 import io.cucumber.java.After;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,8 @@ import static org.springframework.kafka.test.utils.KafkaTestUtils.getRecords;
 @ContextConfiguration(
         initializers = {
                 SpringBootKafkaContextInitializer.class,
-                SpringBootCouchbaseContextInitializer.class
+                SpringBootCouchbaseContextInitializer.class,
+                SpringBootWiremockContextInitializer.class
         },
         classes = {
                 Application.class

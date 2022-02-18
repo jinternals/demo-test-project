@@ -1,6 +1,6 @@
 package com.jinternals.demo.cucumber;
 
-import com.jinternals.demo.testcontainers.KafkaTestContainersSetup;
+import com.jinternals.demo.testcontainers.KafkaTestContainerSetup;
 import io.cucumber.spring.ScenarioScope;
 import lombok.Data;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -38,7 +38,7 @@ public class DataBag {
     }
 
     private Consumer<String, String> prepareKafkaConsumer(String topic) {
-        Map<String, Object>  consumerProps = KafkaTestUtils.consumerProps(KafkaTestContainersSetup.getBootstrapServers(), "testGroup", "true");
+        Map<String, Object>  consumerProps = KafkaTestUtils.consumerProps(KafkaTestContainerSetup.getBootstrapServers(), "testGroup", "true");
         consumerProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         Consumer<String,String> consumer  = new DefaultKafkaConsumerFactory<>( consumerProps, new StringDeserializer(), new StringDeserializer()).createConsumer();

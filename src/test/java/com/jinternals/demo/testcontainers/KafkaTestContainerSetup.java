@@ -9,7 +9,7 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
-public class KafkaTestContainersSetup {
+public class KafkaTestContainerSetup {
     private static final String KAFKA_CONTAINER = "confluentinc/cp-kafka:6.2.1";
     private static final Logger KAFKA_LOGGER = LoggerFactory.getLogger("container.Kafka");
 

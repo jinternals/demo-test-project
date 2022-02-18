@@ -7,15 +7,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 import static org.springframework.boot.test.util.TestPropertyValues.of;
 
 @Slf4j
-public class SpringBootKafkaContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class SpringBootWiremockContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Override
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
 
         // Initialize and start test containers
-        KafkaTestContainerSetup.initTestContainers(configurableApplicationContext.getEnvironment());
+        WiremockTestContainerSetup.initTestContainers(configurableApplicationContext.getEnvironment());
 
-        String kafkaProperties = "spring.kafka.producer.bootstrap-servers=" + KafkaTestContainerSetup.getBootstrapServers();
+        String kafkaProperties = "spring.bootstrap-servers=" + WiremockTestContainerSetup.getWiremockServerUrl();
 
         log.info("Changed config", kafkaProperties);
 
