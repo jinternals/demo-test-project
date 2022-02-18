@@ -1,5 +1,6 @@
 package com.jinternals.demo.utils;
 
+import com.jinternals.demo.services.IDGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;

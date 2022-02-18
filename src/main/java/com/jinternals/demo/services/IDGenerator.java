@@ -1,4 +1,4 @@
-package com.jinternals.demo.utils;
+package com.jinternals.demo.services;
 
 import org.springframework.stereotype.Component;
 

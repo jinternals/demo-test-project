@@ -4,7 +4,7 @@ import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.services.ProductService;
-import com.jinternals.demo.utils.IDGenerator;
+import com.jinternals.demo.services.IDGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

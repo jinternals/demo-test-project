@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.valueOf;
 
@@ -40,6 +41,12 @@ public class AssertSteps {
     @Then("api respond with status {int}")
     public void api_respond_with_status(int status) {
         assertThat(dataBag.getResult().getStatus()).isEqualTo(valueOf(status));
+    }
+
+    @Then("response payload is matching with:")
+    public void body_payload_is_matching_with(String document) {
+        String body = dataBag.getResult().getResponseBody();
+        assertThatJson(body).isEqualTo(document);
     }
 
 }

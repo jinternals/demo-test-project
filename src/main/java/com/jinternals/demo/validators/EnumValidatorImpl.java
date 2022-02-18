@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, String> {
 
-    List<String> valueList = null;
+    private List<String> valueList = null;
     private EnumValidator enumValidator;
 
     @Override

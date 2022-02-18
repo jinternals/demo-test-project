@@ -15,7 +15,7 @@ public class UtilitySteps {
     @Given("register entity {string} as {string}")
     public void register_as_entity(String className, String key) throws Exception {
         Class<?> cls = Class.forName(className);
-        dataBag.getModels().put(key, cls);
+        dataBag.getEntities().put(key, cls);
     }
 
     @Given("configure http headers to:")
