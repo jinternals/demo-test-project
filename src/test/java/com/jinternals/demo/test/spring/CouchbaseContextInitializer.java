@@ -1,6 +1,6 @@
-package com.jinternals.demo.testcontainers.spring;
+package com.jinternals.demo.test.spring;
 
-import com.jinternals.demo.testcontainers.CouchbaseTestContainerSetup;
+import com.jinternals.demo.test.containers.CouchbaseTestContainerSetup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;

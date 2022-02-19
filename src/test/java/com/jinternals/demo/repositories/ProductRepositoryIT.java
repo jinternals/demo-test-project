@@ -3,7 +3,7 @@ package com.jinternals.demo.repositories;
 import com.jinternals.demo.Application;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
-import com.jinternals.demo.testcontainers.spring.CouchbaseContextInitializer;
+import com.jinternals.demo.test.spring.CouchbaseContextInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,17 +35,21 @@ public class ProductRepositoryIT {
 
     @Test
     public void testSaveProductInformation() {
-        Product apple = Product.builder().id("some-id-1").name("Apple").type(ProductType.FOOD).build();
-        Product banana = Product.builder().id("some-id-2").name("Banana").type(ProductType.FOOD).build();
+        Product apple = product("some-id-1", "Apple");
+        Product banana = product("some-id-2", "Banana");
 
         repository.saveAll(Arrays.asList(apple, banana)).subscribe();
 
         StepVerifier
                 .create(repository.findProductByType(ProductType.FOOD))
-                .expectNextMatches(product -> product.equals(Product.builder().id("some-id-1").name("Apple").type(ProductType.FOOD).build()))
-                .expectNextMatches(product -> product.equals(Product.builder().id("some-id-2").name("Banana").type(ProductType.FOOD).build()))
+                .expectNextMatches(product -> product.equals(product("some-id-1", "Apple")))
+                .expectNextMatches(product -> product.equals(product("some-id-2", "Banana")))
                 .verifyComplete();
 
+    }
+
+    private Product product(String id, String Apple) {
+        return Product.builder().id(id).name(Apple).type(ProductType.FOOD).build();
     }
 
 

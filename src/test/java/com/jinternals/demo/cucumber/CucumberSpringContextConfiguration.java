@@ -2,9 +2,9 @@ package com.jinternals.demo.cucumber;
 
 import com.jinternals.demo.Application;
 import com.jinternals.demo.events.annotation.Event;
-import com.jinternals.demo.testcontainers.spring.CouchbaseContextInitializer;
-import com.jinternals.demo.testcontainers.spring.KafkaContextInitializer;
-import com.jinternals.demo.testcontainers.spring.WiremockContextInitializer;
+import com.jinternals.demo.test.spring.CouchbaseContextInitializer;
+import com.jinternals.demo.test.spring.KafkaContextInitializer;
+import com.jinternals.demo.test.spring.WiremockContextInitializer;
 import io.cucumber.java.After;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.jinternals.demo.cucumber;
 
-import com.jinternals.demo.testcontainers.KafkaTestContainerSetup;
+import com.jinternals.demo.test.containers.KafkaTestContainerSetup;
 import io.cucumber.spring.ScenarioScope;
 import lombok.Data;
 import org.apache.kafka.clients.consumer.Consumer;

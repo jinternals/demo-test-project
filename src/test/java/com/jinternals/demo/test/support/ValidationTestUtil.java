@@ -1,4 +1,4 @@
-package com.jinternals.demo.utils;
+package com.jinternals.demo.test.support;
 
 import org.junit.platform.commons.util.AnnotationUtils;
 import org.springframework.aop.MethodBeforeAdvice;
@@ -12,10 +12,12 @@ import javax.validation.executable.ExecutableValidator;
 import java.lang.reflect.Method;
 import java.util.Set;
 
-//Test util for testing annotated beans
+import static org.junit.platform.commons.util.AnnotationUtils.isAnnotated;
+
+//Test util for testing annotated bean methods
 public class ValidationTestUtil {
    public static <T> T validationProxy(T target) {
-        if(AnnotationUtils.isAnnotated(target.getClass(), Validated.class))
+        if(isAnnotated(target.getClass(), Validated.class))
         {
             ProxyFactory factory = new ProxyFactory(target);
             MethodBeforeAdvice beforeAdvice = new MethodBeforeAdvice() {

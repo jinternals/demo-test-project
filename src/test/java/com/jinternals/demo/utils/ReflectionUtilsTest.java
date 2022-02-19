@@ -11,15 +11,15 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import static com.jinternals.demo.utils.ReflectionsUtils.getFieldsAnnotatedWith;
+import static com.jinternals.demo.utils.ReflectionUtils.getFieldsAnnotatedWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class ReflectionsUtilsTest {
+class ReflectionUtilsTest {
 
     @Test
     void shouldReturnDestinationMap() {
-        Map<Class<?>, String> eventDestination = ReflectionsUtils.getEventDestination("com.jinternals.demo.utils");
+        Map<Class<?>, String> eventDestination = ReflectionUtils.getEventDestination("com.jinternals.demo.utils");
 
         assertThat(eventDestination).hasSize(2);
         assertThat(eventDestination).containsEntry(Demo1Event.class, "demo_1");

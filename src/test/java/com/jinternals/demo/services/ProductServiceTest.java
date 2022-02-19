@@ -19,7 +19,7 @@ import javax.validation.ConstraintViolationException;
 
 import static com.jinternals.demo.domain.Product.builder;
 import static com.jinternals.demo.domain.ProductType.FOOD;
-import static com.jinternals.demo.utils.ValidationTestUtil.validationProxy;
+import static com.jinternals.demo.test.support.ValidationTestUtil.validationProxy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;

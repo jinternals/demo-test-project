@@ -2,10 +2,9 @@ package com.jinternals.demo.events;
 
 import com.jinternals.demo.events.annotation.EventKey;
 import com.jinternals.demo.events.exceptions.InvalidEventException;
-import com.jinternals.demo.utils.ReflectionsUtils;
+import com.jinternals.demo.utils.ReflectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.SenderResult;
@@ -63,7 +62,7 @@ public class KafkaEventGateway implements EventGateway {
     private String buildKey(Object event) {
         return fieldCache.get(event.getClass())
                 .stream()
-                .map(field -> ReflectionUtils.getField(field, event))
+                .map(field -> org.springframework.util.ReflectionUtils.getField(field, event))
                 .filter(Objects::nonNull)
                 .map(o -> o.toString())
                 .collect(joining("."));
@@ -71,7 +70,7 @@ public class KafkaEventGateway implements EventGateway {
 
     @NotNull
     private List<Field> getOrderedFields(Object event) {
-        List<Field> fields = ReflectionsUtils.getFieldsAnnotatedWith(event.getClass(), EventKey.class);
+        List<Field> fields = ReflectionUtils.getFieldsAnnotatedWith(event.getClass(), EventKey.class);
         return fields
                 .stream()
                 .sorted(comparingInt(o -> o.getAnnotation(EventKey.class).order()))

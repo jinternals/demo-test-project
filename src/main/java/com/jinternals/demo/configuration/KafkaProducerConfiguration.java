@@ -1,7 +1,7 @@
-package com.jinternals.demo.config;
+package com.jinternals.demo.configuration;
 
 import com.jinternals.demo.events.KafkaEventGateway;
-import com.jinternals.demo.utils.ReflectionsUtils;
+import com.jinternals.demo.utils.ReflectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public Map<Class<?>, String> eventDestinations(@Value("${event.package}") String eventPackage) {
-        return ReflectionsUtils.getEventDestination(eventPackage);
+        return ReflectionUtils.getEventDestination(eventPackage);
     }
 
     @Bean

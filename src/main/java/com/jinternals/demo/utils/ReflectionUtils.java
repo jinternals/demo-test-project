@@ -13,9 +13,9 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.springframework.util.ReflectionUtils.doWithFields;
 
-public class ReflectionsUtils {
+public class ReflectionUtils {
 
-    private ReflectionsUtils() {
+    private ReflectionUtils() {
         throw new IllegalStateException("Utility class");
     }
 

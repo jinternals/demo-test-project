@@ -1,4 +1,4 @@
-package com.jinternals.demo.testcontainers;
+package com.jinternals.demo.test.containers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
