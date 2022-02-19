@@ -33,7 +33,7 @@ class ProductControllerTest {
     private IdGenerator idGenerator;
 
     @Test
-    public void shouldCreateProduct() {
+    void shouldCreateProduct() {
 
         CreateProductRequest request = CreateProductRequest.builder().name("some-product").type("FOOD").build();
 
@@ -57,7 +57,7 @@ class ProductControllerTest {
     }
 
     @Test
-    public void shouldGetProductById() {
+    void shouldGetProductById() {
 
         Product product = Product.builder().id("some-id-x").name("some-product-x").type(FOOD).build();
 
@@ -77,7 +77,7 @@ class ProductControllerTest {
     }
 
     @Test
-    public void shouldReturn404IfProductNotFoundById() {
+    void shouldReturn404IfProductNotFoundById() {
 
         when(productService.getProductById("some-id-x")).thenThrow(new ProductNotFoundException(""));
 

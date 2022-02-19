@@ -16,35 +16,35 @@ class EnumValidatorImplTest {
     private static Validator validator;
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
     @Test
-    public void shouldNotFailIfValueIsCaseSensitive() {
+    void shouldNotFailIfValueIsCaseSensitive() {
         DemoClass1 demoClass = new DemoClass1("DEMO_ENUM_1");
 
-        Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate( demoClass );
+        Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate(demoClass);
 
         assertThat(constraintViolations.size()).isZero();
     }
 
     @Test
-    public void shouldFailIfValueIsNotCaseSensitive() {
+    void shouldFailIfValueIsNotCaseSensitive() {
         DemoClass1 demoClass = new DemoClass1("demo_enum_1");
 
-        Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate( demoClass );
+        Set<ConstraintViolation<DemoClass1>> constraintViolations = validator.validate(demoClass);
 
         assertThat(constraintViolations.size()).isOne();
-        assertThat( constraintViolations.iterator().next().getMessage()).isEqualTo("'demo_enum_1' is not valid type.");
+        assertThat(constraintViolations.iterator().next().getMessage()).isEqualTo("'demo_enum_1' is not valid type.");
     }
 
     @Test
-    public void shouldNotFailIfValueIsNotCaseSensitive() {
+    void shouldNotFailIfValueIsNotCaseSensitive() {
         DemoClass2 demoClass = new DemoClass2("demo_enum_2");
 
-        Set<ConstraintViolation<DemoClass2>> constraintViolations = validator.validate( demoClass );
+        Set<ConstraintViolation<DemoClass2>> constraintViolations = validator.validate(demoClass);
 
         assertThat(constraintViolations.size()).isZero();
     }
@@ -53,7 +53,8 @@ class EnumValidatorImplTest {
     enum DemoEnum {
         DEMO_ENUM_1, DEMO_ENUM_2
     }
-    static class DemoClass1{
+
+    static class DemoClass1 {
 
         public DemoClass1(String value) {
             this.value = value;
@@ -68,7 +69,7 @@ class EnumValidatorImplTest {
 
     }
 
-    static class DemoClass2{
+    static class DemoClass2 {
 
         public DemoClass2(String value) {
             this.value = value;

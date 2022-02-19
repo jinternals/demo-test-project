@@ -19,8 +19,8 @@ import java.util.Arrays;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(
-        initializers = { CouchbaseContextInitializer.class },
-        classes = {Application.class, }
+        initializers = {CouchbaseContextInitializer.class},
+        classes = {Application.class,}
 )
 @DirtiesContext
 public class ProductRepositoryIT {
@@ -29,12 +29,12 @@ public class ProductRepositoryIT {
     private ProductRepository repository;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         repository.deleteAll().subscribe();
     }
 
     @Test
-    public void testSaveProductInformation() {
+    void testSaveProductInformation() {
         Product apple = product("some-id-1", "Apple");
         Product banana = product("some-id-2", "Banana");
 

@@ -37,12 +37,12 @@ class ProductServiceTest {
     private ProductService productService;
 
     @BeforeEach
-    public void initializeTest() {
+    void initializeTest() {
         productService = validationProxy(new ProductService(productRepository, eventGateway));
     }
 
     @Test
-    public void shouldSaveTheProduct() {
+    void shouldSaveTheProduct() {
         Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
         when(productRepository.save(product)).thenReturn(just(product));
         ProductCreatedEvent productCreatedEvent = ProductCreatedEvent.builder()
@@ -60,7 +60,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldFindProductByType() {
+    void shouldFindProductByType() {
         when(productRepository.findProductByType(FOOD)).thenReturn(Flux.just(
                 builder().id("some-id-1").name("Apple").type(FOOD).build(),
                 builder().id("some-id-2").name("Banana").type(FOOD).build()
@@ -75,7 +75,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldGetProductById() {
+    void shouldGetProductById() {
         Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
         when(productRepository.findById("some-id-1")).thenReturn(just(product));
 
@@ -87,7 +87,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldThrowProductNotFoundException() {
+    void shouldThrowProductNotFoundException() {
         when(productRepository.findById("some-id-1")).thenReturn(Mono.empty());
 
         assertThatThrownBy(() -> productService.getProductById("some-id-1").block(), "")
@@ -98,7 +98,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldThrowConstraintViolationExceptionForCreateProduct() {
+    void shouldThrowConstraintViolationExceptionForCreateProduct() {
         Product product = builder().build();
 
         assertThatThrownBy(() -> productService.createProduct(product))
@@ -111,7 +111,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldThrowConstraintViolationExceptionForFindProductByType() {
+    void shouldThrowConstraintViolationExceptionForFindProductByType() {
 
         assertThatThrownBy(() -> productService.findProductByType(null))
                 .isInstanceOf(ConstraintViolationException.class)
@@ -120,7 +120,7 @@ class ProductServiceTest {
     }
 
     @Test
-    public void shouldThrowConstraintViolationExceptionForGetProductById() {
+    void shouldThrowConstraintViolationExceptionForGetProductById() {
 
         assertThatThrownBy(() -> productService.getProductById(""))
                 .isInstanceOf(ConstraintViolationException.class)
