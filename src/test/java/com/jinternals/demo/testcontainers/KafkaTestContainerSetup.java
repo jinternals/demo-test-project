@@ -10,11 +10,11 @@ import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
 public class KafkaTestContainerSetup {
-    private static final String KAFKA_CONTAINER = "confluentinc/cp-kafka:6.2.1";
+    private static final String KAFKA_IMAGE = "confluentinc/cp-kafka:6.2.1";
     private static final Logger KAFKA_LOGGER = LoggerFactory.getLogger("container.Kafka");
 
     private static final KafkaContainer kafkaContainer =
-            new KafkaContainer(DockerImageName.parse(KAFKA_CONTAINER)
+            new KafkaContainer(DockerImageName.parse(KAFKA_IMAGE)
                     .asCompatibleSubstituteFor("confluentinc/kafka"));
 
 

@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.SenderResult;
-import reactor.test.StepVerifier;
 
 import javax.validation.ConstraintViolationException;
 
@@ -25,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 import static reactor.core.publisher.Mono.just;
+import static reactor.test.StepVerifier.create;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -33,6 +33,7 @@ class ProductServiceTest {
     private ProductRepository productRepository;
     @Mock
     private EventGateway eventGateway;
+
     private ProductService productService;
 
     @BeforeEach
@@ -65,7 +66,7 @@ class ProductServiceTest {
                 builder().id("some-id-2").name("Banana").type(FOOD).build()
         ));
 
-        StepVerifier.create(productService.findProductByType(FOOD))
+        create(productService.findProductByType(FOOD))
                 .expectNextMatches(product -> product.equals(builder().id("some-id-1").name("Apple").type(FOOD).build()))
                 .expectNextMatches(product -> product.equals(builder().id("some-id-2").name("Banana").type(FOOD).build()))
                 .verifyComplete();

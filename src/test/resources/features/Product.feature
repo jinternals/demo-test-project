@@ -55,3 +55,14 @@ Feature: Check product apis
       "description": null
     }
     """
+
+  Scenario: Get Existing Product Information by id
+    Given "Product" with following details exist in db:
+    """
+    {"id": "demo-id", "name":  "demo-product", "type":  "FOOD" }
+    """
+    When the client invokes GET "/api/product/demo-id"
+    Then api respond with status 200
+    Then "$.id" should be "demo-id"
+    Then "$.name" should be "demo-product"
+    Then "$.type" should be "FOOD"

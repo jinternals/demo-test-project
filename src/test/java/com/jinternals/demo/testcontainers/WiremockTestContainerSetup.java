@@ -1,6 +1,5 @@
 package com.jinternals.demo.testcontainers;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -10,12 +9,12 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
-@Slf4j
 public class WiremockTestContainerSetup {
     private static final Logger WIREMOCK_LOGGER = LoggerFactory.getLogger("container.Wiremock");
+    private static final String WIREMOCK_IMAGE = "wiremock/wiremock:2.32.0-alpine";
 
     private static final GenericContainer<?> wiremockContainer =
-            new GenericContainer(DockerImageName.parse("wiremock/wiremock:2.32.0-alpine"));
+            new GenericContainer(DockerImageName.parse(WIREMOCK_IMAGE));
 
 
     public static void initTestContainers(ConfigurableEnvironment configEnv) {

@@ -2,9 +2,9 @@ package com.jinternals.demo.cucumber;
 
 import com.jinternals.demo.Application;
 import com.jinternals.demo.events.annotation.Event;
-import com.jinternals.demo.testcontainers.SpringBootCouchbaseContextInitializer;
-import com.jinternals.demo.testcontainers.SpringBootKafkaContextInitializer;
-import com.jinternals.demo.testcontainers.SpringBootWiremockContextInitializer;
+import com.jinternals.demo.testcontainers.spring.CouchbaseContextInitializer;
+import com.jinternals.demo.testcontainers.spring.KafkaContextInitializer;
+import com.jinternals.demo.testcontainers.spring.WiremockContextInitializer;
 import io.cucumber.java.After;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +33,9 @@ import static org.springframework.kafka.test.utils.KafkaTestUtils.getRecords;
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(
         initializers = {
-                SpringBootKafkaContextInitializer.class,
-                SpringBootCouchbaseContextInitializer.class,
-                SpringBootWiremockContextInitializer.class
+                KafkaContextInitializer.class,
+                CouchbaseContextInitializer.class,
+                WiremockContextInitializer.class
         },
         classes = {
                 Application.class

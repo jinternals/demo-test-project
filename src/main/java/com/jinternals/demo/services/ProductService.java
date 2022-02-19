@@ -1,7 +1,7 @@
 package com.jinternals.demo.services;
 
-import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.events.ProductCreatedEvent;
 import com.jinternals.demo.events.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
@@ -35,9 +35,9 @@ public class ProductService {
     public Mono<Product> createProduct(@Valid Product product) {
 
         return productRepository.save(product)
-                .doOnSuccess(product1 -> {
-                    eventGateway.publish(toEvent(product1))
-                            .doOnSuccess(senderResult -> log.info("Sent ProductCreatedEvent offset : {}", senderResult.recordMetadata().offset()))
+                .doOnSuccess(prod -> {
+                    eventGateway.publish(toEvent(prod))
+                            .doOnSuccess(senderResult -> log.info("Published ProductCreatedEvent"))
                             .subscribe();
                 });
 

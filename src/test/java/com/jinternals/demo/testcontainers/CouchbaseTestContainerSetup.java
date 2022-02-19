@@ -11,11 +11,11 @@ import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
 public class CouchbaseTestContainerSetup {
-    private static final String COUCHBASE_CONTAINER = "couchbase:enterprise-6.5.1";
+    private static final String COUCHBASE_IMAGE = "couchbase:enterprise-6.5.1";
     private static final Logger COUCHBASE_LOGGER = LoggerFactory.getLogger("container.Couchbase");
 
     private static final CouchbaseContainer couchbaseContainer =
-            new CouchbaseContainer(DockerImageName.parse(COUCHBASE_CONTAINER)
+            new CouchbaseContainer(DockerImageName.parse(COUCHBASE_IMAGE)
                     .asCompatibleSubstituteFor("couchbase/server"));
 
 

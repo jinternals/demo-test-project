@@ -1,7 +1,7 @@
 package com.jinternals.demo.repositories;
 
-import com.jinternals.demo.domain.ProductType;
 import com.jinternals.demo.domain.Product;
+import com.jinternals.demo.domain.ProductType;
 import org.springframework.data.couchbase.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;

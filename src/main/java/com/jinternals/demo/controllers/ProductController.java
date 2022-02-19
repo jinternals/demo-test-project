@@ -3,8 +3,8 @@ package com.jinternals.demo.controllers;
 import com.jinternals.demo.controllers.requests.CreateProductRequest;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
+import com.jinternals.demo.services.IdGenerator;
 import com.jinternals.demo.services.ProductService;
-import com.jinternals.demo.services.IDGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -16,10 +16,10 @@ import javax.validation.Valid;
 public class ProductController {
 
     private final ProductService productService;
-    private final IDGenerator idGenerator;
+    private final IdGenerator idGenerator;
 
     public ProductController(ProductService productService,
-                             IDGenerator idGenerator) {
+                             IdGenerator idGenerator) {
         this.productService = productService;
         this.idGenerator = idGenerator;
     }

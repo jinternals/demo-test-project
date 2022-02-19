@@ -3,7 +3,7 @@ package com.jinternals.demo.repositories;
 import com.jinternals.demo.Application;
 import com.jinternals.demo.domain.Product;
 import com.jinternals.demo.domain.ProductType;
-import com.jinternals.demo.testcontainers.SpringBootCouchbaseContextInitializer;
+import com.jinternals.demo.testcontainers.spring.CouchbaseContextInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ContextConfiguration(
-        initializers = { SpringBootCouchbaseContextInitializer.class },
+        initializers = { CouchbaseContextInitializer.class },
         classes = {Application.class, }
 )
 @DirtiesContext
