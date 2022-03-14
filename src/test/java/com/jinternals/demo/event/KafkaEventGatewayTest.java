@@ -31,12 +31,12 @@ class KafkaEventGatewayTest {
     private EventGateway kafkaEventGateway;
 
     @BeforeEach
-    public void initializeTest() {
+    void initializeTest() {
         kafkaEventGateway = validationProxy(new KafkaEventGateway(reactiveKafkaProducerTemplate, destination));
     }
 
     @Test
-    public void shouldVerifyTemplatePublishEvent(){
+    void shouldVerifyTemplatePublishEvent(){
         ProductCreatedEvent productCreatedEvent = ProductCreatedEvent.builder()
                 .id("some-id")
                 .name("some-name")
@@ -57,7 +57,7 @@ class KafkaEventGatewayTest {
     }
 
     @Test
-    public void shouldThrowInvalidEventException() {
+    void shouldThrowInvalidEventException() {
 
         Product product = Product.builder()
                 .id("some-id")
@@ -74,19 +74,6 @@ class KafkaEventGatewayTest {
                 .hasMessageContaining("Please ensure your event is annotated with @Event(destination = \"your-destination-topic\")");
 
         verify(destination).get(Product.class);
-
-    }
-
-    @Test
-    public void shouldThrowConstraintViolationException() {
-        ProductCreatedEvent productCreatedEvent = ProductCreatedEvent.builder()
-                .build();
-
-        assertThatThrownBy(() -> kafkaEventGateway.publish(productCreatedEvent))
-                .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContaining("Empty or null id is not allowed")
-                .hasMessageContaining("Null productType is not allowed")
-                .hasMessageContaining("Empty or null name is not allowed");
 
     }
 
