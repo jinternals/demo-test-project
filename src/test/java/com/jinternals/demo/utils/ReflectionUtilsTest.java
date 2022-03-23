@@ -6,6 +6,10 @@ import com.jinternals.demo.events.annotation.EventKey;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.env.Environment;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -13,17 +17,36 @@ import java.util.Map;
 
 import static com.jinternals.demo.utils.ReflectionUtils.getFieldsAnnotatedWith;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 
+@ExtendWith(MockitoExtension.class)
 class ReflectionUtilsTest {
+
+    @Mock
+    private Environment environment;
 
     @Test
     void shouldReturnDestinationMap() {
-        Map<Class<?>, String> eventDestination = ReflectionUtils.getEventDestination("com.jinternals.demo.utils");
+        when(environment.resolvePlaceholders("demo_1")).thenReturn("demo_1");
+        when(environment.resolvePlaceholders("${some.destination}")).thenReturn("demo_2");
+        Map<Class<?>, String> eventDestination = ReflectionUtils.getEventDestination("com.jinternals.demo.utils", environment);
 
         assertThat(eventDestination).hasSize(2);
         assertThat(eventDestination).containsEntry(Demo1Event.class, "demo_1");
         assertThat(eventDestination).containsEntry(Demo2Event.class, "demo_2");
+    }
+
+    @Test
+    void shouldReturnDestination() {
+        when(environment.resolvePlaceholders("demo_1")).thenReturn("demo_1");
+        when(environment.resolvePlaceholders("${some.destination}")).thenReturn("demo_2");
+
+        String eventDestination1 = ReflectionUtils.getEventDestination(Demo1Event.class, environment);
+        String eventDestination2 = ReflectionUtils.getEventDestination(Demo2Event.class, environment);
+
+        assertThat(eventDestination1).isEqualTo("demo_1");
+        assertThat(eventDestination2).isEqualTo("demo_2");
     }
 
 
@@ -59,7 +82,7 @@ class ReflectionUtilsTest {
     }
 
     @Data
-    @Event(destination = "demo_2")
+    @Event(destination = "${some.destination}")
     @EqualsAndHashCode
     public class Demo2Event {
         @EventKey(order = 0)

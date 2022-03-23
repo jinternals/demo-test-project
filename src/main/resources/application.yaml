@@ -35,3 +35,8 @@ event:
   package: com.jinternals.demo.domain.events
 
 debug: false
+
+product:
+  created:
+    event:
+      destination: product

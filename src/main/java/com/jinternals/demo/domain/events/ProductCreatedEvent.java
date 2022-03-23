@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-@Event(destination = "product")
+@Event(destination = "${product.created.event.destination}")
 @EqualsAndHashCode
 public class ProductCreatedEvent {
     @EventKey

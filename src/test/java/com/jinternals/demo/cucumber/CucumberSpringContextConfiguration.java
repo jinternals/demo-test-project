@@ -5,6 +5,7 @@ import com.jinternals.demo.events.annotation.Event;
 import com.jinternals.demo.test.spring.CouchbaseContextInitializer;
 import com.jinternals.demo.test.spring.KafkaContextInitializer;
 import com.jinternals.demo.test.spring.WiremockContextInitializer;
+import com.jinternals.demo.utils.ReflectionUtils;
 import io.cucumber.java.After;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +80,7 @@ public class CucumberSpringContextConfiguration {
         List<Class<?>> classes = dataBag.getEvents().values().stream().collect(Collectors.toList());
 
         classes.forEach(aClass -> {
-            String destination = aClass.getAnnotation(Event.class).destination();
+            String destination = ReflectionUtils.getEventDestination(aClass, applicationContext.getEnvironment());
             ConsumerRecords<String, String> records = getRecords(dataBag.prepareConsumer(destination), dataBag.getTimeouts().getOrDefault(KAFKA_TIMEOUT_KEY, TIMEOUT));
             log.info("Cleaned up topic {} message count {}", destination, records.count());
         });
