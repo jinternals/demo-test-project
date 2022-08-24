@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 
 import static com.jinternals.demo.domain.ProductType.FOOD;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -29,20 +30,14 @@ class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
-    @MockBean
-    private IdGenerator idGenerator;
-
     @Test
     void shouldCreateProduct() {
 
         CreateProductRequest request = CreateProductRequest.builder().name("some-product").type("FOOD").build();
 
         Product product = Product.builder().id("some-id").name("some-product").type(FOOD).build();
-
-        Mono<Product> productMono = Mono.just(product);
-
-        when(productService.createProduct(product)).thenReturn(productMono);
-        when(idGenerator.generateId()).thenReturn("some-id");
+        when(productService.createProduct(any()))
+                .thenReturn(Mono.just(product));
 
         webTestClient.post()
                 .uri("/api/product")

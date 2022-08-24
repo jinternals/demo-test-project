@@ -1,5 +1,7 @@
 package com.jinternals.demo.domain;
 
+import com.jinternals.demo.validators.group.OnCreate;
+import com.jinternals.demo.validators.group.OnUpdate;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Indexed;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Builder
 @Data
@@ -26,9 +29,12 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(of = {"id"})
 @ToString
 public class Product {
+
     @Id
-    @NotEmpty(message = "Empty or null id is not allowed")
+    @Null(groups = OnCreate.class)
+    @NotEmpty(message = "Empty or null id is not allowed", groups = OnUpdate.class )
     private String id;
+
     @Field
     @NotEmpty(message = "Empty or null name is not allowed")
     private String name;

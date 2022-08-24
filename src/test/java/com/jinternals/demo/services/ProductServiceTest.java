@@ -34,16 +34,19 @@ class ProductServiceTest {
     @Mock
     private EventGateway eventGateway;
 
+    @Mock
+    private IdGenerator idGenerator;
+
     private ProductService productService;
 
     @BeforeEach
     void initializeTest() {
-        productService = validationProxy(new ProductService(productRepository, eventGateway));
+        productService = validationProxy(new ProductService(productRepository, eventGateway, idGenerator));
     }
 
     @Test
     void shouldSaveTheProduct() {
-        Product product = builder().id("some-id-1").name("Apple").type(FOOD).build();
+        Product product = builder().name("Apple").type(FOOD).build();
         when(productRepository.save(product)).thenReturn(just(product));
         ProductCreatedEvent productCreatedEvent = ProductCreatedEvent.builder()
                 .id("some-id-1")
@@ -51,6 +54,7 @@ class ProductServiceTest {
                 .type(FOOD)
                 .build();
         when(eventGateway.publish(productCreatedEvent)).thenReturn(just(mock(SenderResult.class)));
+        when(idGenerator.generateId()).thenReturn("some-id-1");
 
         Product savedProduct = productService.createProduct(product).block();
 
@@ -103,7 +107,7 @@ class ProductServiceTest {
 
         assertThatThrownBy(() -> productService.createProduct(product))
                 .isInstanceOf(ConstraintViolationException.class)
-                .hasMessageContainingAll("Empty or null id is not allowed",
+                .hasMessageContainingAll(
                         "Empty or null name is not allowed",
                         "null Empty is not allowed"
                 );

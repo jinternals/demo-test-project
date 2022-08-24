@@ -6,6 +6,7 @@ import com.jinternals.demo.domain.events.ProductCreatedEvent;
 import com.jinternals.demo.events.EventGateway;
 import com.jinternals.demo.exceptions.ProductNotFoundException;
 import com.jinternals.demo.repositories.ProductRepository;
+import com.jinternals.demo.validators.group.OnCreate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -26,14 +27,18 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final EventGateway eventGateway;
+    private final IdGenerator idGenerator;
 
-    public ProductService(ProductRepository productRepository, EventGateway eventGateway) {
+    public ProductService(ProductRepository productRepository, EventGateway eventGateway, IdGenerator idGenerator) {
         this.productRepository = productRepository;
         this.eventGateway = eventGateway;
+        this.idGenerator = idGenerator;
     }
 
-    public Mono<Product> createProduct(@Valid Product product) {
 
+    @Validated(OnCreate.class)
+    public Mono<Product> createProduct(@Valid Product product) {
+        product.setId(idGenerator.generateId());
         return productRepository.save(product)
                 .doOnSuccess(prod -> {
                     eventGateway.publish(toEvent(prod))

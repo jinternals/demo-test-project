@@ -16,19 +16,15 @@ import javax.validation.Valid;
 public class ProductController {
 
     private final ProductService productService;
-    private final IdGenerator idGenerator;
 
-    public ProductController(ProductService productService,
-                             IdGenerator idGenerator) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.idGenerator = idGenerator;
     }
 
     @PostMapping(value = "/product", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Product> saveProduct(@RequestBody @Valid CreateProductRequest productRequest) {
         Product product = fromRequest(productRequest);
-        product.setId(idGenerator.generateId());
         return productService.createProduct(product);
     }
 
